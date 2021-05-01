@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "669589565704",
+    "project_id": "olamusic",
+    "storage_bucket": "olamusic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669589565704:android:1e2282d71b57d3bebffcbd",
+        "android_client_info": {
+          "package_name": "com.example.olamusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669589565704-mgi99ii3isk0qbbc8qrr4980d1ol5fol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.olamusic",
+            "certificate_hash": "b49ab1a5ce0885c06c32c56cb5fae0520d77ae6d"
+          }
+        },
+        {
+          "client_id": "669589565704-viet62hblugllcjn4n1qfd1gqq30ala7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1xP09HXbgHMy-qgYbt2WEWK_q3I1bG0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669589565704-viet62hblugllcjn4n1qfd1gqq30ala7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "669589565704-jcpt2o0457bcg5c4s6b9hqobqh9mlabn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.olamusic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
