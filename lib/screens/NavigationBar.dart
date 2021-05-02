@@ -90,6 +90,7 @@ class _NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     Provider.of<Data>(context, listen: true).initStarred();
+    Provider.of<Basket>(context, listen: true).initBasket();
     PersistentTabController _controller =
         Provider.of<Basket>(context).controller;
     return PersistentTabView(

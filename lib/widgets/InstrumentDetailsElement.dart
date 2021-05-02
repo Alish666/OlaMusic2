@@ -19,7 +19,7 @@ class InstrumentDetailsElement extends StatelessWidget {
               right: 25,
               child: Container(
                 child: Text(
-                  "2",
+                  instrument.overallQuantity.toString(),
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
