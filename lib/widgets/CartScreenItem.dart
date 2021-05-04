@@ -69,38 +69,41 @@ class _CartScreenItemState extends State<CartScreenItem> {
                         ),
                       ),
                     ),
-                    Column(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () => goToInstrumentDetailScreen(
-                              context, basketData.basket[key].instrument),
-                          child: Text(
-                            basketData.basket[key].instrument.name,
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                    Flexible(
+                      child: Column(
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () => goToInstrumentDetailScreen(
+                                context, basketData.basket[key].instrument),
+                            child: Text(
+                              basketData.basket[key].instrument.name,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          '\$' +
-                              (basketData.basket[key].instrument.price *
-                                      basketData.basket[key].quantity)
-                                  .toString(),
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green[800]),
-                        ),
-                        SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          basketData.basket[key].instrument.type,
-                          style: TextStyle(fontSize: 20),
-                        )
-                      ],
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text(
+                            '\$' +
+                                (basketData.basket[key].instrument.price *
+                                        basketData.basket[key].quantity)
+                                    .toString(),
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[800]),
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text(
+                            basketData.basket[key].instrument.typeName,
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      ),
                     ),
                     Column(
                       children: <Widget>[
@@ -129,7 +132,7 @@ class _CartScreenItemState extends State<CartScreenItem> {
                               .decrement(basketData.basket[key].instrument),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               );

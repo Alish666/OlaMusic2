@@ -40,6 +40,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     print('no user signed in');
                   } else {
                     print(user.uid + '  AND  ' + user.email);
+                    print(user.displayName);
+                    print(user.metadata);
                   }
                 });
               },

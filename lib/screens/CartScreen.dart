@@ -14,6 +14,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final basketData = Provider.of<Basket>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(249, 247, 243, 1),
       appBar: AppBar(
         elevation: 0,

@@ -6,16 +6,27 @@ import 'package:provider/provider.dart';
 import 'ProductItem.dart';
 
 class CatalogViewBuilder extends StatefulWidget {
+  final String family;
+
+  CatalogViewBuilder({Key key, this.family}) : super(key: key);
+
   @override
   _CatalogViewBuilderState createState() => _CatalogViewBuilderState();
 }
 
 class _CatalogViewBuilderState extends State<CatalogViewBuilder> {
-  var catalogData =
-      FirebaseFirestore.instance.collection('catalog').snapshots();
-
   @override
   Widget build(BuildContext context) {
+    var catalogData = widget.family.length > 1
+        ? FirebaseFirestore.instance
+            .collection('catalog')
+            .where('indexSearch', arrayContains: widget.family.toLowerCase())
+            .snapshots()
+        : FirebaseFirestore.instance
+            .collection('catalog')
+            .where('family', isEqualTo: widget.family)
+            .snapshots();
+
     final data = Provider.of<Data>(context);
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -34,6 +45,7 @@ class _CatalogViewBuilderState extends State<CatalogViewBuilder> {
                   overallQuantity: snapshot.data.docs[i]['overallQuantity'],
                   price: snapshot.data.docs[i]['price'],
                   type: snapshot.data.docs[i]['type'],
+                  typeName: snapshot.data.docs[i]['typeName'],
                   url: snapshot.data.docs[i]['url'],
                   weight: snapshot.data.docs[i]['weight'],
                 ),

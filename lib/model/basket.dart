@@ -51,6 +51,7 @@ class Basket with ChangeNotifier {
                 id: element1.id,
                 name: element1.get('name'),
                 type: element1.get('type'),
+                typeName: element1.get('typeName'),
                 color: element1.get('color'),
                 weight: element1.get('weight'),
                 url: element1.get('url'),

@@ -11,6 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:badges/badges.dart';
 import 'package:provider/provider.dart';
 import 'FavoriteScreen.dart';
+import 'FilterScreen.dart';
 import 'ProfileScreen.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -22,7 +23,7 @@ class _NavigationBarState extends State<NavigationBar> {
   List<Widget> _buildScreens() {
     return [
       HomePageScreen(),
-      ProductsOverviewScreen(),
+      FilterScreen(),
       FavoriteScreen(),
       ProfileScreen(),
       CartScreen(),

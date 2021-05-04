@@ -6,6 +6,7 @@ class Instrument with ChangeNotifier {
   final String family;
   final int overallQuantity;
   final String type;
+  final String typeName;
   final String color;
   final int weight;
   final String url;
@@ -16,6 +17,7 @@ class Instrument with ChangeNotifier {
       {@required this.id,
       @required this.name,
       @required this.type,
+      @required this.typeName,
       @required this.color,
       @required this.weight,
       @required this.url,

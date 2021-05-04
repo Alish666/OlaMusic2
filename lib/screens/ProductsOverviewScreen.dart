@@ -14,19 +14,25 @@ class ProductsOverviewScreen extends StatefulWidget {
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
+    final family = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       backgroundColor: Color.fromRGBO(249, 247, 243, 1),
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.of(context).pop()),
         backgroundColor: Color.fromRGBO(249, 247, 243, 1),
-        title: Center(
-          child: Text(
-            "Products",
-            style: TextStyle(color: Colors.grey[900]),
-          ),
+        title: Text(
+          "Products",
+          style: TextStyle(color: Colors.grey[900]),
         ),
+        centerTitle: true,
         elevation: 0,
       ),
-      body: CatalogViewBuilder(),
+      body: CatalogViewBuilder(family: family),
     );
   }
 }

@@ -83,6 +83,7 @@ class ProductItem extends StatelessWidget {
                   padding: EdgeInsets.only(left: 25),
                   child: Text(
                     instrument.name,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Colors.grey[800],
                         fontSize: 19,
