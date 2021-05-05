@@ -27,9 +27,7 @@ class FrontLayer extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      //TODO: implement page switching to Orders Screen
-                    })),
+                    onPressed: () {})),
           ),
           SizedBox(
             height: 10,
@@ -50,9 +48,7 @@ class FrontLayer extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      //TODO: implement page switching to Orders Screen
-                    })),
+                    onPressed: () {})),
           ),
           SizedBox(
             height: 10,
@@ -73,9 +69,7 @@ class FrontLayer extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      //TODO: implement page switching to Orders Screen
-                    })),
+                    onPressed: () {})),
           ),
           SizedBox(
             height: 10,
@@ -96,9 +90,7 @@ class FrontLayer extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      //TODO: implement page switching to Orders Screen
-                    })),
+                    onPressed: () {})),
           ),
           SizedBox(
             height: 10,
@@ -119,9 +111,7 @@ class FrontLayer extends StatelessWidget {
                       Icons.arrow_forward_ios_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
-                      //TODO: implement page switching to Orders Screen
-                    })),
+                    onPressed: () {})),
           ),
           SizedBox(
             height: 10,

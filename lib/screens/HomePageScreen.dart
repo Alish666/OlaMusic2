@@ -44,6 +44,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     print(user.metadata);
                   }
                 });
+                FirebaseAuth.instance.signOut();
               },
             ),
             Text(value)

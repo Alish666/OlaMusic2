@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         title: Text(
-          userData.nameText == '' ? 'Settings' : userData.nameText,
+          userData.nameText == 'q' ? "Settings" : userData.nameText,
           style: TextStyle(fontSize: 25),
         ),
         actionsIconTheme: IconThemeData(color: Colors.red),
@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
       backLayer: SingleChildScrollView(
+        ////////////////////////////////////////////// BAAAAAAAAAAAACCCCKKKKKKKKKKK LAAAAAAAAAAYYYYYYEEEEEEEEEERRRRRRRRRR
         child: Padding(
           padding: EdgeInsets.all(25),
           child: Column(
@@ -76,8 +77,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 5,
                       ),
                       Text(
-                        userData.nameText == ''
-                            ? 'Username'
+                        userData.nameText == 'q'
+                            ? "Username"
                             : userData.nameText,
                         style: TextStyle(fontSize: 17, color: Colors.white),
                       ),

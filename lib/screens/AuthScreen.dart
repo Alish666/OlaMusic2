@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_button/animated_button.dart';
 import 'package:olamusic/model/data.dart';
@@ -12,52 +13,144 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  bool isShown = true;
+  bool isShown2 = true;
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPasswordController = new TextEditingController();
   bool showLogIn = true;
+
+  var _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 50,
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(25),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 100,
+                ),
+                Text(
+                  showLogIn ? "Sign In" : "Create an account",
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  showLogIn ? "Please sign in to continue" : "",
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    primaryColor: Colors.black,
+                  ),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.length < 2) {
+                        return 'Enter at least 2 chars!';
+                      } else if (value == null ||
+                          value.isEmpty ||
+                          !value.contains('@')) {
+                        return 'Enter email!';
+                      } else {
+                        return null;
+                      }
+                    },
+                    autofocus: true,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+
+                    ///////////////////////////////////////////////////////////////  1
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.mail_outline,
+                      ),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.bold),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey[350], width: 1),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey[350], width: 1),
+                      ),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    controller: emailController,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    primaryColor: Colors.black,
+                  ),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.length < 2) {
+                        return 'Enter at least 2 chars!';
+                      } else if (value == null || value.isEmpty) {
+                        return 'Enter password!';
+                      } else {
+                        return null;
+                      }
+                    },
+                    autofocus: true,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ////////////////////////////////////////////////// 2
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isShown ? Icons.remove_red_eye : Icons.security,
+                          color: Color.fromRGBO(255, 188, 44, 1),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isShown = !isShown;
+                          });
+                        },
+                      ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.bold),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey[350], width: 1),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey[350], width: 1),
+                      ),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: isShown,
+                    controller: passwordController,
+                  ),
+                ),
+                showLogIn
+                    ? logInWidget(context)
+                    : registerWidget(context, confirmPasswordController),
+              ],
             ),
-            Text(
-              "Login to your account",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Email address'),
-              keyboardType: TextInputType.emailAddress,
-              obscureText: false,
-              controller: emailController,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              controller: passwordController,
-            ),
-            showLogIn
-                ? logInWidget(context)
-                : registerWidget(context, confirmPasswordController),
-            TextButton(
-                onPressed: () => signInWithGoogle(),
-                child: Text(
-                  'SIGN IN GOOGLE',
-                  style: TextStyle(color: Colors.teal),
-                )),
-          ],
+          ),
         ),
       ),
     );
@@ -67,49 +160,75 @@ class _AuthScreenState extends State<AuthScreen> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 16,
+          height: 26,
         ),
-        AnimatedButton(
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text);
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'user-not-found') {
-                print('No user found for that email.');
-              } else if (e.code == 'wrong-password') {
-                print('Wrong password provided for that user.');
-              }
-            }
-            FirebaseAuth.instance.authStateChanges().listen((User user) {
-              if (user == null) {
-                print('no!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-              } else {
-                print('YYYYYYYEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!');
-              }
-            });
-            setState(() {
-              emailController.clear();
-              passwordController.clear();
-            });
-          },
-          child: Text(
-            "LOG IN",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            AnimatedButton(
+              shape: BoxShape.rectangle,
+              onPressed: () => signInWithGoogle(),
+              child: Text(
+                'G+',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              width: 60,
+              height: 60,
+              color: Color.fromRGBO(204, 66, 55, 1),
             ),
-          ),
-          height: 60,
-          width: 375,
-          color: Color.fromRGBO(255, 188, 44, 1),
+            AnimatedButton(
+              onPressed: () async {
+                if (_formKey.currentState.validate()) {
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text);
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      print('No user found for that email.');
+                    } else if (e.code == 'wrong-password') {
+                      print('Wrong password provided for that user.');
+                    }
+                  }
+                }
+
+                FirebaseAuth.instance.authStateChanges().listen((User user) {
+                  if (user == null) {
+                    print(
+                        'NNNNOOOOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                  } else {
+                    print(
+                        'YYYYYYYEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSS!!!!!!!!!!!');
+                  }
+                });
+                setState(() {
+                  emailController.clear();
+                  passwordController.clear();
+                });
+              },
+              child: Text(
+                "SIGN IN",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              height: 60,
+              width: 300,
+              color: Color.fromRGBO(255, 188, 44, 1),
+            ),
+          ],
         ),
         SizedBox(
           height: 16,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               "Don't have an account?",
@@ -142,34 +261,72 @@ class _AuthScreenState extends State<AuthScreen> {
           height: 5,
         ),
         TextFormField(
-          decoration: InputDecoration(labelText: 'Confirm Password'),
+          validator: (value) {
+            if (value.length < 2) {
+              return 'Enter at least 2 chars!';
+            } else if (value == null || value.isEmpty) {
+              return 'Invalid Input!';
+            } else if (passwordController.text != value) {
+              return 'Passwords do not match!';
+            } else {
+              return null;
+            }
+          },
+          autofocus: true,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ////////////////////////////////////////////////// 2
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.lock),
+            suffixIcon: IconButton(
+              icon: Icon(
+                isShown ? Icons.remove_red_eye : Icons.security,
+                color: Color.fromRGBO(255, 188, 44, 1),
+              ),
+              onPressed: () {
+                setState(() {
+                  isShown2 = !isShown2;
+                });
+              },
+            ),
+            labelText: 'Confirm Password',
+            labelStyle:
+                TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[350], width: 1),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[350], width: 1),
+            ),
+          ),
           keyboardType: TextInputType.visiblePassword,
-          obscureText: true,
-          controller: textEditingController,
+          obscureText: isShown2,
+          controller: confirmPasswordController,
         ),
         SizedBox(
           height: 16,
         ),
         AnimatedButton(
           onPressed: () async {
-            try {
-              UserCredential userCredential = await FirebaseAuth.instance
-                  .createUserWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text);
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'weak-password') {
-                print('The password provided is too weak.');
-              } else if (e.code == 'email-already-in-use') {
-                print('The account already exists for that email.');
+            if (_formKey.currentState.validate()) {
+              try {
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: emailController.text,
+                    password: passwordController.text);
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'weak-password') {
+                  print('weak password');
+                } else if (e.code == 'email-already-in-use') {
+                  print("email already in use");
+                }
+              } catch (e) {
+                print(e);
               }
-            } catch (e) {
-              print(e);
+              setState(() {
+                emailController.clear();
+                passwordController.clear();
+                confirmPasswordController.clear();
+              });
             }
-            setState(() {
-              emailController.clear();
-              passwordController.clear();
-            });
           },
           child: Text(
             "REGISTER",
@@ -184,6 +341,7 @@ class _AuthScreenState extends State<AuthScreen> {
           color: Color.fromRGBO(255, 188, 44, 1),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               "Already have an account?",
@@ -222,7 +380,6 @@ class _AuthScreenState extends State<AuthScreen> {
       idToken: googleAuth.idToken,
     );
 
-    // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

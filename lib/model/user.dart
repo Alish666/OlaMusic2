@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OlaUser with ChangeNotifier {
-  TextEditingController _name;
-  TextEditingController _surname;
-  TextEditingController _phone;
-  TextEditingController _country;
-  TextEditingController _city;
-  TextEditingController _address;
+  TextEditingController _name = TextEditingController();
+  TextEditingController _surname = TextEditingController();
+  TextEditingController _phone = TextEditingController();
+  TextEditingController _country = TextEditingController();
+  TextEditingController _city = TextEditingController();
+  TextEditingController _address = TextEditingController();
 
   String _uid;
   String _url;
@@ -16,7 +16,7 @@ class OlaUser with ChangeNotifier {
   String get uid => FirebaseAuth.instance.currentUser.uid;
 
   String get nameText {
-    return _name.text;
+    return _name.text.isEmpty ? 'q' : _name.text;
   }
 
   String get surnameText => _surname.text;
@@ -80,12 +80,12 @@ class OlaUser with ChangeNotifier {
     String city1 = await dataFetch.data()['city'];
     String address1 = await dataFetch.data()['address'];
 
-    _name = TextEditingController(text: name1);
-    _surname = TextEditingController(text: surname1);
-    _phone = TextEditingController(text: number1);
-    _country = TextEditingController(text: country1);
-    _city = TextEditingController(text: city1);
-    _address = TextEditingController(text: address1);
+    _name.text = name1;
+    _surname.text = surname1;
+    _phone.text = number1;
+    _country.text = country1;
+    _city.text = city1;
+    _address.text = address1;
 
     notifyListeners();
     print('NAME IS ---------------' + _name.text);
