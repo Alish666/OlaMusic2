@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/basket.dart';
 import 'package:olamusic/model/data.dart';
+import 'package:olamusic/model/user.dart';
 import 'package:olamusic/screens/CartScreen.dart';
 import 'package:olamusic/screens/HomePageScreen.dart';
 import 'package:olamusic/screens/InstrumentDetailScreen.dart';
@@ -20,6 +21,17 @@ class NavigationBar extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationBar> {
+  var _isInit = true; // CHANGE THE VARIABLE
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<OlaUser>(context).initUser();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   List<Widget> _buildScreens() {
     return [
       HomePageScreen(),
@@ -92,6 +104,7 @@ class _NavigationBarState extends State<NavigationBar> {
   Widget build(BuildContext context) {
     Provider.of<Data>(context, listen: true).initStarred();
     Provider.of<Basket>(context, listen: true).initBasket();
+
     PersistentTabController _controller =
         Provider.of<Basket>(context).controller;
     return PersistentTabView(

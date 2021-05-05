@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/data.dart';
+import 'package:olamusic/model/user.dart';
+import 'package:olamusic/model/user.dart';
 import 'package:olamusic/screens/AuthScreen.dart';
 
 import 'package:olamusic/screens/HomePageScreen.dart';
@@ -45,7 +47,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => Data()),
-        ChangeNotifierProvider(create: (ctx) => Basket())
+        ChangeNotifierProvider(create: (ctx) => Basket()),
+        ChangeNotifierProvider(create: (ctx) => OlaUser()),
       ],
       child: MaterialApp(
         home: user != null ? NavigationBar() : AuthScreen(),

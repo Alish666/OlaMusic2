@@ -1,134 +1,103 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase/firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-// class OlaUser with ChangeNotifier {
-//   String _uid = '';
-//   String _name = '';
-//   String _surname = '';
-//   String _email = '';
-//   String _number = '';
-//   bool _gender = true;
-//   String _country = '';
-//   String _city = '';
-//   String _address = '';
-//   String _url = '';
+class OlaUser with ChangeNotifier {
+  TextEditingController _name;
+  TextEditingController _surname;
+  TextEditingController _phone;
+  TextEditingController _country;
+  TextEditingController _city;
+  TextEditingController _address;
 
-//   String get uid => FirebaseAuth.instance.currentUser.uid;
-//   String get name {
-//     return FirebaseAuth.instance.isSignInWithEmailLink(email)
-//         ? _name
-//         : FirebaseAuth.instance.currentUser.displayName;
-//   }
+  String _uid;
+  String _url;
 
-//   String get surname => _surname;
-//   String get email => FirebaseAuth.instance.currentUser.email;
-//   String get number => _number;
-//   bool get gender => _gender;
-//   String get country => _country;
-//   String get city => _city;
-//   String get address => _address;
-//   String get url => _url;
+  String get uid => FirebaseAuth.instance.currentUser.uid;
 
-//   Future<void> setName(String name) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _name = name;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'name': name})
-//         .then((value) => print("Name is set!"))
-//         .catchError((error) => print(error));
-//   }
+  String get nameText {
+    return _name.text;
+  }
 
-//   Future<void> setSurename(String surname) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _surname = surname;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'surname': surname})
-//         .then((value) => print("Surname is set!"))
-//         .catchError((error) => print(error));
-//   }
+  String get surnameText => _surname.text;
+  String get numberText => _phone.text;
+  String get countryText => _country.text;
+  String get cityText => _city.text;
+  String get addressText => _address.text;
 
-//   Future<void> setNumber(String number) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _number = number;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'number': number})
-//         .then((value) => print("Number is set!"))
-//         .catchError((error) => print(error));
-//   }
+  TextEditingController get name => _name;
+  TextEditingController get surname => _surname;
+  TextEditingController get number => _phone;
+  TextEditingController get country => _country;
+  TextEditingController get city => _city;
+  TextEditingController get address => _address;
 
-//   Future<void> setGender(bool value) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _gender = value;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'gender': value})
-//         .then((value) => print("Gender is set!"))
-//         .catchError((error) => print(error));
-//   }
+  String get url => _url;
+  String get email => FirebaseAuth.instance.currentUser.email;
 
-//   Future<void> setCountry(String country) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _country = country;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'country': country})
-//         .then((value) => print("Country is set!"))
-//         .catchError((error) => print(error));
-//   }
+  Future<void> setUserInfo(
+      {@required String name,
+      @required String surname,
+      @required String number,
+      @required String country,
+      @required String city,
+      @required String address}) async {
+    final fb = FirebaseFirestore.instance.collection('users/');
+    _name.text = name;
+    _surname.text = surname;
+    _phone.text = number;
+    _country.text = country;
+    _city.text = city;
+    _address.text = address;
+    notifyListeners();
 
-//   Future<void> setCity(String city) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _city = city;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'city': city})
-//         .then((value) => print("City is set!"))
-//         .catchError((error) => print(error));
-//   }
+    var userId = FirebaseAuth.instance.currentUser.uid;
 
-//   Future<void> setAddress(String address) async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     _address = address;
-//     notifyListeners();
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     await fb
-//         .doc('$userId')
-//         .set({'address': address})
-//         .then((value) => print("City is set!"))
-//         .catchError((error) => print(error));
-//   }
+    await fb
+        .doc('$userId')
+        .set({
+          'name': name,
+          'surname': surname,
+          'number': number,
+          'country': country,
+          'city': city,
+          'address': address
+        })
+        .then((value) => print("Surname is set!"))
+        .catchError((error) => print(error));
+    initUser();
+  }
 
-//   Future<void> initUser() async {
-//     final fb = FirebaseFirestore.instance.collection('users/');
-//     var userId = FirebaseAuth.instance.currentUser.uid;
-//     var dataFetch = await fb.doc('$userId').get();
-//     _name = await dataFetch.data()['name'];
-//     _surname = await dataFetch.data()['surname'];
-//     _email = await dataFetch.data()['email'];
-//     _number = await dataFetch.data()['number'];
-//     _gender = await dataFetch.data()['gender'];
-//     _country = await dataFetch.data()['country'];
-//     _city = await dataFetch.data()['city'];
-//     _address = await dataFetch.data()['address'];
+  Future<void> initUser() async {
+    final fb = FirebaseFirestore.instance.collection('users/');
+    var userId = FirebaseAuth.instance.currentUser.uid;
+    var dataFetch = await fb.doc('$userId').get();
 
-//     notifyListeners();
-//   }
-// }
+    String name1 = await dataFetch.data()['name'];
+    String surname1 = await dataFetch.data()['surname'];
+    String number1 = await dataFetch.data()['number'];
+    String country1 = await dataFetch.data()['country'];
+    String city1 = await dataFetch.data()['city'];
+    String address1 = await dataFetch.data()['address'];
+
+    _name = TextEditingController(text: name1);
+    _surname = TextEditingController(text: surname1);
+    _phone = TextEditingController(text: number1);
+    _country = TextEditingController(text: country1);
+    _city = TextEditingController(text: city1);
+    _address = TextEditingController(text: address1);
+
+    notifyListeners();
+    print('NAME IS ---------------' + _name.text);
+  }
+
+  void clearData() {
+    _name.clear();
+    _surname.clear();
+    _phone.clear();
+    _country.clear();
+    _city.clear();
+    _address.clear();
+    notifyListeners();
+  }
+}

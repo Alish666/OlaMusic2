@@ -1,6 +1,7 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/basket.dart';
+import 'package:olamusic/model/user.dart';
 import 'package:olamusic/widgets/CartScreenItem.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final basketData = Provider.of<Basket>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(249, 247, 243, 1),
