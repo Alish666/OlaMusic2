@@ -97,6 +97,10 @@ class Data with ChangeNotifier {
     return {..._starred};
   }
 
+  int get starredCount {
+    return _starred.length;
+  }
+
   List<Instrument> get catalog {
     return [..._catalog];
   }

@@ -69,6 +69,9 @@ class _CartScreenItemState extends State<CartScreenItem> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      width: 7,
+                    ),
                     Flexible(
                       child: Column(
                         children: <Widget>[

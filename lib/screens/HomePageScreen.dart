@@ -1,10 +1,13 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/data.dart';
+import 'package:olamusic/widgets/HomePageSlider.dart';
+import 'package:olamusic/widgets/HomePageVideoPlayer.dart';
 import 'package:olamusic/widgets/RecomendedList.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -13,42 +16,39 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  String value = '';
-  var url = Uri.parse(
-      'https://olamusic-default-rtdb.firebaseio.com/instruments.json');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color.fromRGBO(249, 247, 243, 1),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color.fromRGBO(249, 247, 243, 1),
+          backgroundColor: Colors.black,
           title: Center(
-            child: Text(
-              "oLA",
-              style: TextStyle(color: Colors.black),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'oLA ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                  TextSpan(
+                      text: 'Music',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 20))
+                ],
+              ),
             ),
           ),
         ),
-        body: Column(
-          children: [
-            TextButton(
-              child: Text("press"),
-              onPressed: () {
-                FirebaseAuth.instance.authStateChanges().listen((User user) {
-                  if (user == null) {
-                    print('no user signed in');
-                  } else {
-                    print(user.uid + '  AND  ' + user.email);
-                    print(user.displayName);
-                    print(user.metadata);
-                  }
-                });
-                FirebaseAuth.instance.signOut();
-              },
-            ),
-            Text(value)
-          ],
+        body: Padding(
+          padding: EdgeInsets.all(15),
+          child: ListView(
+            children: <Widget>[HomePageSlider(), HomePageVideoPlayer()],
+          ),
         ));
   }
 }
