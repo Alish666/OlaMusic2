@@ -53,6 +53,8 @@ dependencies:
   flutter_swiper: ^1.1.6
   animated_text_kit: ^4.2.1
   octo_image: ^1.0.0+1
+  url_launcher: ^6.0.3
+  line_icons: ^2.0.1
 
   
   

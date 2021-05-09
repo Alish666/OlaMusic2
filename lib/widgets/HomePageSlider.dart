@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:olamusic/screens/ProductsOverviewScreen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class HomePageSlider extends StatefulWidget {
   @override
@@ -139,7 +141,7 @@ class _HomePageSliderState extends State<HomePageSlider> {
       elevation: 5,
       child: InkWell(
         borderRadius: BorderRadius.circular(13),
-        onTap: () {},
+        onTap: () => _goToProductsOverviewScreen('piano', context),
         child: Column(
           children: <Widget>[
             Stack(
@@ -222,7 +224,7 @@ class _HomePageSliderState extends State<HomePageSlider> {
       elevation: 5,
       child: InkWell(
         borderRadius: BorderRadius.circular(13),
-        onTap: () {},
+        onTap: () => _goToProductsOverviewScreen('stratocaster', context),
         child: Column(
           children: <Widget>[
             Stack(
@@ -309,5 +311,14 @@ class _HomePageSliderState extends State<HomePageSlider> {
         )
       ],
     );
+  }
+
+  void _goToProductsOverviewScreen(String family, BuildContext context) {
+    pushNewScreenWithRouteSettings(context,
+        screen: ProductsOverviewScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+        settings:
+            RouteSettings(name: '/InstrumentDetailScreen', arguments: family));
   }
 }

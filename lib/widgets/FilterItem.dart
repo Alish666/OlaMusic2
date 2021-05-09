@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/screens/ProductsOverviewScreen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:line_icons/line_icons.dart';
 
 class FilterItem extends StatefulWidget {
   @override
@@ -16,14 +18,20 @@ class _FilterItemState extends State<FilterItem> {
       padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
       child: ListView(
         children: <Widget>[
-          Container(
-            height: 42,
+          SizedBox(
+            height: 7,
+          ),
+          Theme(
+            data: Theme.of(context).copyWith(
+              primaryColor: Colors.white,
+            ),
             child: TextFormField(
+                autofocus: false,
                 controller: name,
-                cursorHeight: 0.1,
-                cursorColor: Colors.black,
+                cursorColor: Colors.white,
                 style: TextStyle(
-                  height: 3,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
                 validator: (value) {
                   if (value.length < 2) {
@@ -33,18 +41,34 @@ class _FilterItemState extends State<FilterItem> {
                   }
                 },
                 decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        LineIcons.chevronCircleRight,
+                        size: 30,
+                        color: Color.fromRGBO(255, 188, 44, 1),
+                      ),
+                      onPressed: () {
+                        if (name.text.isEmpty) {
+                          return;
+                        } else {
+                          _goToProductsOverviewScreen(name.text, context);
+                          name.clear();
+                        }
+                      },
+                    ),
+                    hintStyle: TextStyle(
+                        color: Colors.grey[200], fontWeight: FontWeight.normal),
                     fillColor: Colors.black,
-                    focusColor: Colors.black,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    prefixIcon: Icon(Icons.search),
+                        borderRadius: BorderRadius.circular(20)),
+                    filled: true,
+                    prefixIcon: Icon(Icons.search, color: Colors.white),
                     hintText: 'Model or product name'),
                 onEditingComplete: () {
-                  if (name.text.isEmpty) {
-                    return;
-                  } else {
-                    _goToProductsOverviewScreen(name.text, context);
-                    name.clear();
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus.unfocus();
                   }
                 }),
           ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _url = 'https://www.canva.com/create/facebook-covers/';
 
 class Advert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: _launchURL,
       child: Container(
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -33,4 +36,8 @@ class Advert extends StatelessWidget {
       ),
     );
   }
+
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }

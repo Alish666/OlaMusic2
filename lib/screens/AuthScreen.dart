@@ -6,6 +6,7 @@ import 'package:olamusic/widgets/RecomendedList.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:line_icons/line_icons.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -168,13 +169,10 @@ class _AuthScreenState extends State<AuthScreen> {
             AnimatedButton(
               shape: BoxShape.rectangle,
               onPressed: () => signInWithGoogle(),
-              child: Text(
-                'G+',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Icon(
+                LineIcons.googlePlusG,
+                color: Colors.white,
+                size: 32,
               ),
               width: 60,
               height: 60,
@@ -367,19 +365,13 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
-
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

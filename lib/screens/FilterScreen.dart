@@ -5,16 +5,30 @@ class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(249, 247, 243, 1),
-        shadowColor: Colors.orange[50],
+        elevation: 0,
+        backgroundColor: Colors.black,
         title: Center(
-          child: Text(
-            "oLA",
-            style: TextStyle(color: Colors.black),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: 'oLA ',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+                TextSpan(
+                    text: 'Music',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20))
+              ],
+            ),
           ),
         ),
-        elevation: 0,
       ),
       body: FilterItem(),
       backgroundColor: Color.fromRGBO(249, 247, 243, 1),

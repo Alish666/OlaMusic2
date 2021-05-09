@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePageVideoPlayer extends StatefulWidget {
   @override
   _HomePageVideoPlayerState createState() => _HomePageVideoPlayerState();
 }
+
+const _url = 'https://www.youtube.com/watch?v=1Eq9RVKT9XQ&t=34s';
 
 class _HomePageVideoPlayerState extends State<HomePageVideoPlayer> {
   bool _isClickedOne = false;
@@ -45,6 +48,7 @@ class _HomePageVideoPlayerState extends State<HomePageVideoPlayer> {
                 setState(() {
                   _isClickedOne = !_isClickedOne;
                 });
+                _launchURL();
               }),
         ),
         Positioned(
@@ -56,6 +60,7 @@ class _HomePageVideoPlayerState extends State<HomePageVideoPlayer> {
                 setState(() {
                   _isClickedOne = !_isClickedOne;
                 });
+                _launchURL();
               },
               child: Text(
                 'SEE JAMES HETFIELDS ESP JH IRON CROSS',
@@ -71,4 +76,8 @@ class _HomePageVideoPlayerState extends State<HomePageVideoPlayer> {
       ]),
     );
   }
+
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }
