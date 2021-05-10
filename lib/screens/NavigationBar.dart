@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/basket.dart';
+import 'package:olamusic/model/card.dart';
 import 'package:olamusic/model/data.dart';
 import 'package:olamusic/model/user.dart';
 import 'package:olamusic/screens/CartScreen.dart';
@@ -27,6 +28,7 @@ class _NavigationBarState extends State<NavigationBar> {
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<OlaUser>(context).initUser();
+      Provider.of<DataCard>(context).initCardInfo();
     }
     _isInit = false;
     super.didChangeDependencies();

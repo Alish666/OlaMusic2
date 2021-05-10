@@ -55,6 +55,7 @@ dependencies:
   octo_image: ^1.0.0+1
   url_launcher: ^6.0.3
   line_icons: ^2.0.1
+  flutter_credit_card: ^2.0.0
 
   
   

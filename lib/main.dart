@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/ProfileScreen.dart';
+import 'package:olamusic/model/card.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (ctx) => Data()),
         ChangeNotifierProvider(create: (ctx) => Basket()),
         ChangeNotifierProvider(create: (ctx) => OlaUser()),
+        ChangeNotifierProvider(create: (ctx) => DataCard()),
       ],
       child: MaterialApp(
         home: user != null ? NavigationBar() : AuthScreen(),
