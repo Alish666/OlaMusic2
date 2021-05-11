@@ -1,5 +1,6 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:olamusic/model/basket.dart';
 import 'package:olamusic/model/user.dart';
 import 'package:olamusic/widgets/CartScreenItem.dart';
@@ -11,6 +12,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  var _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final basketData = Provider.of<Basket>(context);
@@ -22,9 +24,23 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 0,
         backgroundColor: Color.fromRGBO(249, 247, 243, 1),
         title: Center(
-          child: Text(
-            "oLA",
-            style: TextStyle(color: Colors.black),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: 'oLA ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+                TextSpan(
+                    text: 'Music',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20))
+              ],
+            ),
           ),
         ),
       ),
@@ -98,13 +114,46 @@ class _CartScreenState extends State<CartScreen> {
               Divider(
                 color: Colors.black,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Enter Promocode!',
+              Theme(
+                data: Theme.of(context).copyWith(
+                  primaryColor: Colors.black,
                 ),
-                keyboardAppearance: Brightness.dark,
-                keyboardType: TextInputType.text,
-                scrollPadding: EdgeInsets.all(20),
+                child: Form(
+                  key: _key,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                    cursorColor: Colors.black,
+                    validator: (value) {
+                      if (value != 'fghk555') {
+                        return "Invalid code!";
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Enter Promocode!',
+                      suffix: IconButton(
+                        icon: Icon(
+                          LineIcons.chevronCircleRight,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          if (_key.currentState.validate()) {
+                            print('promocode is validated!');
+                          } else {
+                            print('invalid promocode');
+                          }
+                        },
+                      ),
+                    ),
+                    keyboardAppearance: Brightness.dark,
+                    keyboardType: TextInputType.text,
+                    scrollPadding: EdgeInsets.all(20),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 14,

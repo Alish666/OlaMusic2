@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/model/data.dart';
 import 'package:olamusic/model/instrument.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:like_button/like_button.dart';
+import 'package:share/share.dart';
 import 'InstrumentDetailScreen.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -22,9 +24,23 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         elevation: 0,
         backgroundColor: Color.fromRGBO(249, 247, 243, 1),
         title: Center(
-          child: Text(
-            "oLA",
-            style: TextStyle(color: Colors.black),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: 'oLA ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+                TextSpan(
+                    text: 'Music',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20))
+              ],
+            ),
           ),
         ),
       ),
@@ -76,7 +92,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         caption: 'Share',
                         color: Colors.indigo,
                         icon: Icons.share,
-                        onTap: () {},
+                        onTap: () => _share(context, data.starred[key]),
                       ),
                     ],
                     actionPane: SlidableDrawerActionPane(),
@@ -101,10 +117,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(10),
-                              child: Image.network(
-                                data.starred[key].url,
+                              child: OctoImage(
                                 height: 80,
                                 width: 80,
+                                image: NetworkImage(data.starred[key].url),
+                                placeholderBuilder: (context) => const Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.grey),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -174,5 +196,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         pageTransitionAnimation: PageTransitionAnimation.cupertino,
         settings: RouteSettings(
             name: '/InstrumentDetailScreen', arguments: instrument));
+  }
+
+  void _share(BuildContext context, Instrument instrument) async {
+    final String subject = 'Get ${instrument.typeName} in Ola Music!';
+    final String body =
+        'Get ${instrument.typeName} in our website! \n ${instrument.name} - \n${instrument.price} US Dollars';
+    await Share.share(body, subject: subject);
   }
 }

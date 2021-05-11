@@ -11,7 +11,6 @@ import 'package:olamusic/widgets/Recomendation.dart';
 import 'package:olamusic/widgets/RecomendedList.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 
 class HomePageScreen extends StatefulWidget {

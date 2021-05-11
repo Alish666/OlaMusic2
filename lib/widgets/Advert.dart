@@ -16,8 +16,10 @@ class Advert extends StatelessWidget {
             OctoImage(
               image: NetworkImage(
                   'https://assets.materialup.com/uploads/53dc2278-1533-4f65-8a48-5ce5634f719e/preview.jpg'),
-              placeholderBuilder: OctoPlaceholder.blurHash(
-                'LDIEReBq,.00%2IqS5.T-oIAJV',
+              placeholderBuilder: (context) => const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                ),
               ),
               fit: BoxFit.fitWidth,
               width: double.maxFinite,
@@ -41,3 +43,8 @@ class Advert extends StatelessWidget {
       ? await launch(_url)
       : throw 'Could not launch $_url';
 }
+
+
+// OctoPlaceholder.blurHash(
+//                 'LDIEReBq,.00%2IqS5.T-oIAJV',
+//               )

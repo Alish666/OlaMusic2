@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_button/animated_button.dart';
 import 'package:olamusic/model/data.dart';
+import 'package:olamusic/screens/AuthReset.dart';
 import 'package:olamusic/widgets/RecomendedList.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -71,7 +72,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         return null;
                       }
                     },
-                    autofocus: true,
+                    autofocus: false,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
 
                     ///////////////////////////////////////////////////////////////  1
@@ -113,7 +114,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         return null;
                       }
                     },
-                    autofocus: true,
+                    autofocus: false,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ////////////////////////////////////////////////// 2
                     decoration: InputDecoration(
@@ -187,9 +188,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         password: passwordController.text);
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
+                      _showError(context, 'No user found for that email!');
                     } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
+                      _showError(
+                          context, 'Wrong password provided for that user!');
                     }
                   }
                 }
@@ -226,25 +228,48 @@ class _AuthScreenState extends State<AuthScreen> {
           height: 16,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Don't have an account?",
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-            ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
             TextButton(
-                onPressed: () {
-                  setState(() {
-                    showLogIn = false;
-                    emailController.clear();
-                    passwordController.clear();
-                  });
-                },
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(
-                      fontSize: 16, color: Color.fromRGBO(255, 188, 44, 1)),
-                ))
+              onPressed: () {
+                setState(() {
+                  emailController.clear();
+                  passwordController.clear();
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AuthReset()),
+                );
+              },
+              child: Text(
+                "Forgot Password?",
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromRGBO(255, 188, 44, 1)),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  "Don't have an account?",
+                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      showLogIn = false;
+                      emailController.clear();
+                      passwordController.clear();
+                    });
+                  },
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                        fontSize: 16, color: Color.fromRGBO(255, 188, 44, 1)),
+                  ),
+                ),
+              ],
+            ),
           ],
         )
       ],
@@ -258,47 +283,52 @@ class _AuthScreenState extends State<AuthScreen> {
         SizedBox(
           height: 5,
         ),
-        TextFormField(
-          validator: (value) {
-            if (value.length < 2) {
-              return 'Enter at least 2 chars!';
-            } else if (value == null || value.isEmpty) {
-              return 'Invalid Input!';
-            } else if (passwordController.text != value) {
-              return 'Passwords do not match!';
-            } else {
-              return null;
-            }
-          },
-          autofocus: true,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ////////////////////////////////////////////////// 2
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.lock),
-            suffixIcon: IconButton(
-              icon: Icon(
-                isShown ? Icons.remove_red_eye : Icons.security,
-                color: Color.fromRGBO(255, 188, 44, 1),
-              ),
-              onPressed: () {
-                setState(() {
-                  isShown2 = !isShown2;
-                });
-              },
-            ),
-            labelText: 'Confirm Password',
-            labelStyle:
-                TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[350], width: 1),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[350], width: 1),
-            ),
+        Theme(
+          data: Theme.of(context).copyWith(
+            primaryColor: Colors.black,
           ),
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: isShown2,
-          controller: confirmPasswordController,
+          child: TextFormField(
+            validator: (value) {
+              if (value.length < 2) {
+                return 'Enter at least 2 chars!';
+              } else if (value == null || value.isEmpty) {
+                return 'Invalid Input!';
+              } else if (passwordController.text != value) {
+                return 'Passwords do not match!';
+              } else {
+                return null;
+              }
+            },
+            autofocus: false,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ////////////////////////////////////////////////// 2
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.lock),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  isShown ? Icons.remove_red_eye : Icons.security,
+                  color: Color.fromRGBO(255, 188, 44, 1),
+                ),
+                onPressed: () {
+                  setState(() {
+                    isShown2 = !isShown2;
+                  });
+                },
+              ),
+              labelText: 'Confirm Password',
+              labelStyle:
+                  TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[350], width: 1),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[350], width: 1),
+              ),
+            ),
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: isShown2,
+            controller: confirmPasswordController,
+          ),
         ),
         SizedBox(
           height: 16,
@@ -312,9 +342,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     password: passwordController.text);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
-                  print('weak password');
+                  _showError(context, 'Provided password is weak!');
                 } else if (e.code == 'email-already-in-use') {
-                  print("email already in use");
+                  _showError(context, "Email account already in use!");
                 }
               } catch (e) {
                 print(e);
@@ -373,5 +403,43 @@ class _AuthScreenState extends State<AuthScreen> {
       idToken: googleAuth.idToken,
     );
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<void> _showError(BuildContext context, String message) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Icon(
+                  LineIcons.exclamationTriangle,
+                  color: Colors.red,
+                  size: 60,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  message,
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK', style: TextStyle(color: Colors.yellow[900])),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

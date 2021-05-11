@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:olamusic/screens/user%20settings/AskPage.dart';
+import 'package:olamusic/screens/user%20settings/Covid.dart';
 import 'package:olamusic/screens/user%20settings/Faq.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -109,7 +111,7 @@ class Support extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () => _goToDefinedScreen(context, Covid()),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(29, 29, 29, 1),

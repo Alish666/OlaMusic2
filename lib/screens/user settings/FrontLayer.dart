@@ -5,6 +5,7 @@ import 'package:olamusic/model/card.dart';
 import 'package:olamusic/model/data.dart';
 import 'package:olamusic/model/user.dart';
 import 'package:olamusic/screens/user%20settings/OrdersList.dart';
+import 'package:olamusic/screens/user%20settings/PasswordChange.dart';
 import 'package:olamusic/screens/user%20settings/PaymentCard.dart';
 import 'package:olamusic/screens/user%20settings/Support.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -130,9 +131,20 @@ class FrontLayer extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          DecoratedBox(
-            decoration: formStyle(),
-            child: ListTile(
+          GestureDetector(
+            onTap: () {
+              if (isSignedInViaGoogle() == null) {
+                _goToDefinedScreen(
+                  context,
+                  PasswordChange(),
+                );
+              } else {
+                _showMyDialog(context);
+              }
+            },
+            child: DecoratedBox(
+              decoration: formStyle(),
+              child: ListTile(
                 leading: Icon(
                   Icons.vpn_key_sharp,
                   color: Colors.black,
@@ -142,11 +154,23 @@ class FrontLayer extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
-                    icon: Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {})),
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    if (isSignedInViaGoogle() == null) {
+                      _goToDefinedScreen(
+                        context,
+                        PasswordChange(),
+                      );
+                    } else {
+                      _showMyDialog(context);
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
           SizedBox(
             height: 10,
@@ -155,23 +179,14 @@ class FrontLayer extends StatelessWidget {
             decoration: formStyle(),
             child: ListTile(
               leading: GestureDetector(
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Provider.of<Data>(context, listen: false).clearStarred();
-                  Provider.of<OlaUser>(context, listen: false).clearData();
-                },
+                onTap: () async => _signOut(context),
                 child: Icon(
                   Icons.login,
                   color: Colors.red[700],
                 ),
               ),
               title: GestureDetector(
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Provider.of<Data>(context, listen: false).clearStarred();
-                  Provider.of<OlaUser>(context, listen: false).clearData();
-                  Provider.of<DataCard>(context, listen: false).clearData();
-                },
+                onTap: () async => _signOut(context),
                 child: Text(
                   'Sign Out',
                   style: TextStyle(
@@ -199,6 +214,83 @@ class FrontLayer extends StatelessWidget {
           blurRadius: 3,
         )
       ],
+    );
+  }
+
+  String isSignedInViaGoogle() {
+    return FirebaseAuth.instance.currentUser.displayName;
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('You can not change password.'),
+                Text('You were logged in through Google account!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.yellow[900]),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure to Sign Out?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey[700]),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'SIGN OUT',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).pop();
+                Provider.of<Data>(context, listen: false).clearStarred();
+                Provider.of<OlaUser>(context, listen: false).clearData();
+                Provider.of<DataCard>(context, listen: false).clearData();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

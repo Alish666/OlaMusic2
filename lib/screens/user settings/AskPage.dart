@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -53,6 +54,7 @@ class _AskPageState extends State<AskPage> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextFormField(
                   validator: (value) {
@@ -172,36 +174,64 @@ class _AskPageState extends State<AskPage> {
                   height: 10,
                 ),
                 TextButton(
-                    onPressed: () {
-                      name.clear();
-                      email.clear();
-                      topic.clear();
-                      text.clear();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Color.fromRGBO(25, 25, 25, 1),
-                          behavior: SnackBarBehavior.floating,
-                          content: Text(
-                            'Message is Sent!',
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,
+                  onPressed: () {
+                    sendRequest(
+                            name1: name.text,
+                            email1: email.text,
+                            topicName1: topic.text,
+                            body1: text.text)
+                        .then(
+                      (value) {
+                        name.clear();
+                        email.clear();
+                        topic.clear();
+                        text.clear();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Color.fromRGBO(25, 25, 25, 1),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              'Message is Sent!',
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                            duration: Duration(seconds: 2),
                           ),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Send',
-                      style: TextStyle(
-                          color: Colors.yellow[600],
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
-                    ))
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Send',
+                    style: TextStyle(
+                        color: Colors.yellow[600],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> sendRequest(
+      {@required String name1,
+      @required String email1,
+      @required String topicName1,
+      @required String body1}) async {
+    final fb = FirebaseFirestore.instance.collection('questions/');
+    var userId = FirebaseAuth.instance.currentUser.uid;
+    await fb
+        .add({
+          'name': name1,
+          'email': email1,
+          'topicName': topicName1,
+          'body': body1
+        })
+        .then((value) => print("Surname is set!"))
+        .catchError((error) => print(error));
   }
 }

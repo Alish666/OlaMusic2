@@ -32,12 +32,12 @@ class ProductItem extends StatelessWidget {
               child: IconButton(
                 icon: data.starred.containsKey(instrument.id)
                     ? Icon(
-                        Icons.star,
+                        Icons.favorite,
                         size: 28,
-                        color: Colors.yellow[600],
+                        color: Colors.red[600],
                       )
                     : Icon(
-                        Icons.star,
+                        Icons.favorite,
                         size: 28,
                         color: Colors.grey,
                       ),

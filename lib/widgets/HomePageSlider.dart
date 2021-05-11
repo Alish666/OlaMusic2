@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/screens/ProductsOverviewScreen.dart';
@@ -14,22 +14,7 @@ class _HomePageSliderState extends State<HomePageSlider> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _list = [_firstPage(), _secondPage(), _thirdScreen()];
-    return Theme(
-      data: Theme.of(context).copyWith(
-          primaryColor: Color.fromRGBO(255, 188, 44, 1),
-          disabledColor: Colors.black),
-      child: Swiper(
-        viewportFraction: 0.9,
-        itemCount: 3,
-        autoplay: true,
-        autoplayDelay: 7000,
-        itemHeight: 330,
-        itemWidth: double.maxFinite,
-        layout: SwiperLayout.STACK,
-        itemBuilder: (ctx, i) => _list[i],
-        pagination: SwiperPagination(margin: EdgeInsets.only(top: 20)),
-      ),
-    );
+    return Container();
   }
 
   Widget _firstPage() {
