@@ -12,8 +12,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _url =
-    'https://market.yandex.kz/product--elektrogitara-cort-kx5/7076149?lr=0';
+const _url = 'http://project4092956.tilda.ws/';
 
 class FrontLayer extends StatelessWidget {
   @override

@@ -57,6 +57,9 @@ dependencies:
   flutter_credit_card: ^2.0.0
   share: ^2.0.1
   flutter_rating_bar: ^4.0.0
+  carousel_slider: ^3.0.0
+  google_fonts: ^2.0.0
+
 
   
   
@@ -97,12 +100,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Nova
+      fonts:
+        - asset: lib/font/NovaFlat-Regular.ttf
+        
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

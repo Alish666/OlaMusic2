@@ -27,7 +27,6 @@ class _CatalogViewBuilderState extends State<CatalogViewBuilder> {
             .where('family', isEqualTo: widget.family)
             .snapshots();
 
-    final data = Provider.of<Data>(context);
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {

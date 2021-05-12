@@ -1,6 +1,7 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:olamusic/model/card.dart';
 import 'package:olamusic/model/user.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class FormCardPayment extends StatefulWidget {
 
 class _FormCardPaymentState extends State<FormCardPayment> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool isBackShown = false;
+
   @override
   Widget build(BuildContext context) {
     final dataCard = Provider.of<DataCard>(context);
@@ -25,7 +26,7 @@ class _FormCardPaymentState extends State<FormCardPayment> {
             cardHolderName:
                 dataCard.holderName == null ? '' : dataCard.holderName,
             cvvCode: dataCard.cvv == null ? '' : dataCard.cvv,
-            showBackView: isBackShown,
+            showBackView: false,
             cardBgColor: Colors.grey[900],
             obscureCardCvv: false,
             obscureCardNumber: true,
@@ -44,9 +45,6 @@ class _FormCardPaymentState extends State<FormCardPayment> {
                   cardNumber1: creditCardModel.cardNumber,
                   cvv1: creditCardModel.cvvCode,
                   expiryDate1: creditCardModel.expiryDate);
-              setState(() {
-                isBackShown = !isBackShown;
-              });
             },
             themeColor: Colors.black,
             formKey: formKey,
@@ -79,8 +77,18 @@ class _FormCardPaymentState extends State<FormCardPayment> {
               if (formKey.currentState.validate()) {
                 print('Valid!');
                 dataCard.setCardInfo();
+                _showResult(
+                    context: context,
+                    message: 'Card is Saved!',
+                    icon: LineIcons.checkCircle,
+                    color: Colors.green);
               } else {
                 print('Invalid!');
+                _showResult(
+                    context: context,
+                    message: 'Invalid!',
+                    icon: LineIcons.exclamationTriangle,
+                    color: Colors.red);
               }
             },
             child: Text(
@@ -93,6 +101,50 @@ class _FormCardPaymentState extends State<FormCardPayment> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showResult(
+      {@required BuildContext context,
+      @required String message,
+      @required IconData icon,
+      @required Color color}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: color,
+                  size: 60,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text(
+                    message,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK', style: TextStyle(color: Colors.yellow[900])),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

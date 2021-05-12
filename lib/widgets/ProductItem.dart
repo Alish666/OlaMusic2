@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/screens/InstrumentDetailScreen.dart';
 import '../model/instrument.dart';
 import '../model/data.dart';
@@ -56,13 +57,22 @@ class ProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 55, top: 30, right: 30, bottom: 10),
-                  child: Image.network(
-                    instrument.url,
-                    scale: 6,
-                  ),
-                ),
+                    padding: EdgeInsets.only(
+                        left: 55, top: 30, right: 30, bottom: 10),
+                    child: OctoImage(
+                      image: NetworkImage(instrument.url),
+                      width: 130,
+                      height: 130,
+                      placeholderBuilder: (context) => Container(
+                        height: 50,
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.grey),
+                          ),
+                        ),
+                      ),
+                    )),
                 SizedBox(
                   height: 18,
                 ),

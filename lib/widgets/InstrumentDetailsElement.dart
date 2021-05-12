@@ -41,17 +41,17 @@ class _InstrumentDetailsElementState extends State<InstrumentDetailsElement> {
         Stack(
           children: [
             OctoImage(
-                image: NetworkImage(widget.instrument.url),
-                fit: BoxFit.contain,
-                placeholderBuilder: (context) => Container(
-                      height: 250,
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.grey),
-                        ),
-                      ),
-                    )),
+              image: NetworkImage(widget.instrument.url),
+              fit: BoxFit.contain,
+              placeholderBuilder: (context) => Container(
+                height: 250,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+                  ),
+                ),
+              ),
+            ),
             Positioned(
               bottom: 25,
               right: 25,
@@ -251,7 +251,7 @@ class _InstrumentDetailsElementState extends State<InstrumentDetailsElement> {
                 height: 9,
               ),
               Text(
-                'Weight',
+                'Weight, kg',
                 style: TextStyle(color: Colors.grey),
               ),
               Text(

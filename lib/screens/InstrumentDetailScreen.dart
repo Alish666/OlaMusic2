@@ -30,10 +30,23 @@ class _InstrumentDetailScreenState extends State<InstrumentDetailScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0),
-        title: Center(
-          child: Text(
-            "oLA",
-            style: TextStyle(color: Colors.black),
+        centerTitle: true,
+        title: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                  text: 'oLA ',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+              TextSpan(
+                  text: 'Music',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 20))
+            ],
           ),
         ),
         leading: IconButton(

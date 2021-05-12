@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/screens/ProductsOverviewScreen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -11,273 +12,119 @@ class HomePageSlider extends StatefulWidget {
 }
 
 class _HomePageSliderState extends State<HomePageSlider> {
+  List<Widget> _list;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _list = [
+      _firstPage(context, 'kit'),
+      _form(
+          url: 'https://i.ibb.co/K7wSF6Z/The-Piano-Store03-1800x1200.png',
+          blur: 'L7Dll[-;0L-o9}~A~UWX=_%Lx^-:',
+          text: 'Get F.Shopen type pianos now!',
+          keyword: 'piano'),
+      _form(
+          url:
+              'https://thumbs-prod.si-cdn.com/l7ZmifA3_098mcefNSIEMytGVis=/800x600/filters:no_upscale()/https://public-media.si-cdn.com/filer/3e/6e/3e6ec3a5-9ccb-422a-812c-30443331bf6e/zxy921303web.jpg',
+          blur: 'L49ixdrw005i0wIo}]%30MXR=y=J',
+          text: 'Look at Van Halens Floyd Rose guitars',
+          keyword: 'stratocaster'),
+      _form(
+          url:
+              'https://img4.goodfon.com/wallpaper/nbig/1/aa/ukulele-gitara-fon.jpg',
+          blur: 'LFELmK~pSyIArrI:-o-V9G0LIV%1',
+          text: 'Get Ukuleles for Summer!',
+          keyword: 'ukulele'),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> _list = [_firstPage(), _secondPage(), _thirdScreen()];
-    return Container();
+    return CarouselSlider.builder(
+      itemBuilder: (BuildContext context, int index, int realIndex) {
+        return _list[index];
+      },
+      itemCount: _list.length,
+      options: CarouselOptions(
+          autoPlay: true, aspectRatio: 16 / 9, enlargeCenterPage: true),
+    );
   }
 
-  Widget _firstPage() {
-    ////////////////////////////////////////////////////// BBEEEEEEEEEEGIIIIIIIIIIIIIIIIIIIIIINNNNNNNNNNSSSSSSSSSSSS
-    return Card(
-      margin: EdgeInsets.only(bottom: 15, top: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      elevation: 5,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(13),
-        onTap: () {},
-        child: Column(
-          children: <Widget>[
-            Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
-                  child: Container(
-                    child: Center(
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 70.0,
-                        ),
-                        child: AnimatedTextKit(
-                          isRepeatingAnimation: true,
-                          animatedTexts: [
-                            ScaleAnimatedText('Get Your'),
-                            ScaleAnimatedText('50% Sale'),
-                            ScaleAnimatedText('Right Now'),
-                          ],
-                          onTap: () {
-                            print("Tap Event");
-                          },
-                        ),
-                      ),
-                    ),
-                    height: 250,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Color.fromRGBO(117, 55, 209, 1),
-                      Color.fromRGBO(160, 98, 253, 1)
-                    ])),
-                  ),
+  Widget _firstPage(BuildContext context, String family) {
+    return GestureDetector(
+      onTap: () => _goToProductsOverviewScreen(family, context),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: GridTile(
+          child: Container(
+            child: Center(
+              child: DefaultTextStyle(
+                style: GoogleFonts.novaFlat(fontSize: 60),
+                child: AnimatedTextKit(
+                  isRepeatingAnimation: true,
+                  animatedTexts: [
+                    ScaleAnimatedText('Get Your'),
+                    ScaleAnimatedText('50% Sale'),
+                    ScaleAnimatedText('Right Now'),
+                  ],
+                  onTap: () => _goToProductsOverviewScreen(family, context),
                 ),
-                Positioned(
-                  bottom: 20,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                    width: 300,
-                    child: Text(
-                      'Get 50% sales till August!',
-                      style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 0.7),
-                          fontSize: 25),
-                    ),
-                    decoration:
-                        BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                  ),
-                )
-              ],
+              ),
             ),
-            SizedBox(
-              height: 20,
+            height: 150,
+            width: 300,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(117, 55, 209, 1),
+                  Color.fromRGBO(160, 98, 253, 1)
+                ],
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Hurry up to get all from summer  ',
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: 'Ola Music Exclusive',
-                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                      )
-                    ],
-                  ),
-                )
-              ],
+          ),
+          footer: GridTileBar(
+            backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+            title: Text(
+              'Hurry up to get all till July!',
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(
-              height: 20,
-            )
-          ],
+          ),
         ),
       ),
-    ); ////////////////////////////////////////////////////// EEEEEEEEEEEEEEENNNNNNNNNNNNNNNNNDDDDDDDDDDDDDDDDDDDDDDDDDDDSSSSSSSSSS
+    );
   }
 
-  Widget _secondPage() {
-    return Card(
-      margin: EdgeInsets.only(bottom: 15, top: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      elevation: 5,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(13),
-        onTap: () => _goToProductsOverviewScreen('piano', context),
-        child: Column(
-          children: <Widget>[
-            Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
-                  child: OctoImage(
-                    image: NetworkImage(
-                        'https://i.ibb.co/K7wSF6Z/The-Piano-Store03-1800x1200.png'),
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'L7Dll[-;0L-o9}~A~UWX=_%Lx^-:',
-                    ),
-                    errorBuilder: OctoError.icon(color: Colors.red),
-                    fit: BoxFit.fitWidth,
-                    width: double.maxFinite,
-                    height: 250,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                    width: 300,
-                    child: Text(
-                      'F. Shopen pianos feedback',
-                      style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 0.7),
-                          fontSize: 25),
-                    ),
-                    decoration:
-                        BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                  ),
-                )
-              ],
+  Widget _form(
+      {@required String url,
+      @required String blur,
+      @required String text,
+      @required String keyword}) {
+    return GestureDetector(
+      onTap: () => _goToProductsOverviewScreen(keyword, context),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: DecoratedBox(
+          decoration: BoxDecoration(color: Colors.black),
+          child: GridTile(
+            child: OctoImage(
+              image: NetworkImage(url),
+              width: 300,
+              height: 150,
+              placeholderBuilder: OctoPlaceholder.blurHash(
+                blur,
+              ),
             ),
-            SizedBox(
-              height: 20,
+            footer: GridTileBar(
+              backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+              title: Text(
+                text,
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Classical pianos written in history  ',
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: 'Ola Music Exclusive',
-                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      ),
-    ); ////////////////////////////////////////////////////// EEEEEEEEEEEEEEENNNNNNNNNNNNNNNNNDDDDDDDDDDDDDDDDDDDDDDDDDDDSSSSSSSSSS
-  }
-
-  Widget _thirdScreen() {
-    return Card(
-      margin: EdgeInsets.only(bottom: 15, top: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      elevation: 5,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(13),
-        onTap: () => _goToProductsOverviewScreen('stratocaster', context),
-        child: Column(
-          children: <Widget>[
-            Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15)),
-                  child: OctoImage(
-                    image: NetworkImage(
-                        'https://thumbs-prod.si-cdn.com/l7ZmifA3_098mcefNSIEMytGVis=/800x600/filters:no_upscale()/https://public-media.si-cdn.com/filer/3e/6e/3e6ec3a5-9ccb-422a-812c-30443331bf6e/zxy921303web.jpg'),
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'L49ixdrw005i0wIo}]%30MXR=y=J',
-                    ),
-                    errorBuilder: OctoError.icon(color: Colors.red),
-                    fit: BoxFit.fitWidth,
-                    width: double.maxFinite,
-                    height: 250,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                    width: 300,
-                    child: Text(
-                      'Eddie Van Hallens Guitar',
-                      style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 0.7),
-                          fontSize: 25),
-                    ),
-                    decoration:
-                        BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.5)),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Look for Eddie Van Hallens floyd rose guitars  ',
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: 'Ola Music Exclusive',
-                        style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            )
-          ],
+          ),
         ),
       ),
     );

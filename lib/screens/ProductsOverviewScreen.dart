@@ -11,10 +11,16 @@ class ProductsOverviewScreen extends StatefulWidget {
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
 
+enum FilterOptions {
+  Ascending,
+  Descending,
+}
+
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     final family = ModalRoute.of(context).settings.arguments as String;
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(249, 247, 243, 1),
       appBar: AppBar(

@@ -6,6 +6,7 @@ class FAQ extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -18,15 +19,84 @@ class FAQ extends StatelessWidget {
           icon: Icon(LineIcons.angleLeft),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: [
-            _form(
-                question: 'What is application about?',
-                answer:
-                    'Application is about online shop for getting musical instruments and so on!')
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              _form(
+                  question: 'What is application about?',
+                  answer:
+                      'Application is about online shop for getting musical instruments and so on!'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'How do I reset my password?',
+                  answer:
+                      'To reset your password, you must go to the profile settings and click on the change password button'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'Is it safe to use your personal data?',
+                  answer:
+                      'All of your personal information is stored on secure servers, so you dont have to worry about your personal data.'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'How do I change my profile?',
+                  answer:
+                      'To change your profile, go to the profile section, then change the necessary data and click the save changes button'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'What to do when changing a mobile device?',
+                  answer:
+                      'You can enter your personal account from any mobile device, of course, if you remember your username and password.'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'My email is already in use',
+                  answer:
+                      'If you receive this error, please contact us and we will help you'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question:
+                      'How does oLA music differ from other similar applications?',
+                  answer:
+                      'oLA music is a convenient and easy-to-use application with a huge database of musical instruments, equipment and accessories'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'Where is your store located?',
+                  answer:
+                      'Our store is located in Almaty, and delivery is carried out throughout Asia as soon as possible'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'Who can see my personal information?',
+                  answer:
+                      'Only verified administrators can see your personal information on the companys secure servers.'),
+              SizedBox(
+                height: 10,
+              ),
+              _form(
+                  question: 'How do I delete an account in your application?',
+                  answer:
+                      'To delete your account, contact support and you will be answered as soon as possible'),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );

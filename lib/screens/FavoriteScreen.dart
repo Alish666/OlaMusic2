@@ -164,15 +164,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         SizedBox(
                           width: 3,
                         ),
-                        LikeButton(
-                          onTap: (_) =>
+                        IconButton(
+                          icon: Icon(Icons.delete, size: 30, color: Colors.red),
+                          onPressed: () =>
                               data.deleteFromStarred(data.starred[key]),
-                          likeBuilder: (_) => Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                        )
+                        ),
                       ],
                     ),
                   ),
