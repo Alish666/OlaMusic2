@@ -71,9 +71,23 @@ class _InstrumentDetailScreenState extends State<InstrumentDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 behavior: SnackBarBehavior.floating,
-                content: Text(
-                  'Instrument is added to basket!',
-                  textAlign: TextAlign.center,
+                content: Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Instrument is added to basket!',
+                      ),
+                      TextButton(
+                          onPressed: () =>
+                              basketData.deleteFromBasket(instrument),
+                          child: Text(
+                            'UNDO',
+                            style: TextStyle(color: Colors.red[600]),
+                          ))
+                    ],
+                  ),
                 ),
                 duration: Duration(seconds: 2),
               ),
