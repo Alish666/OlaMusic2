@@ -12,7 +12,7 @@ class OlaUser with ChangeNotifier {
 
   String _uid;
   String _url;
-
+  String _avatar = 'bear';
   String get uid => FirebaseAuth.instance.currentUser.uid;
 
   String get nameText {
@@ -24,6 +24,7 @@ class OlaUser with ChangeNotifier {
   String get countryText => _country.text;
   String get cityText => _city.text;
   String get addressText => _address.text;
+  String get avatar => _avatar;
 
   TextEditingController get name => _name;
   TextEditingController get surname => _surname;
@@ -34,6 +35,11 @@ class OlaUser with ChangeNotifier {
 
   String get url => _url;
   String get email => FirebaseAuth.instance.currentUser.email;
+
+  void setAvatar(String value) {
+    _avatar = value;
+    notifyListeners();
+  }
 
   Future<void> setUserInfo(
       {@required String name,
@@ -61,9 +67,10 @@ class OlaUser with ChangeNotifier {
           'number': number,
           'country': country,
           'city': city,
-          'address': address
+          'address': address,
+          'avatar': _avatar
         })
-        .then((value) => print("Surname is set!"))
+        .then((value) => print("User data is set!"))
         .catchError((error) => print(error));
     initUser();
   }
@@ -79,6 +86,7 @@ class OlaUser with ChangeNotifier {
     String country1 = await dataFetch.data()['country'];
     String city1 = await dataFetch.data()['city'];
     String address1 = await dataFetch.data()['address'];
+    String avatar1 = await dataFetch.data()['avatar'];
 
     _name.text = name1;
     _surname.text = surname1;
@@ -86,6 +94,9 @@ class OlaUser with ChangeNotifier {
     _country.text = country1;
     _city.text = city1;
     _address.text = address1;
+    _avatar = (avatar1 == null || avatar1.isEmpty || avatar1 == '')
+        ? 'bear'
+        : avatar1;
 
     notifyListeners();
     print('NAME IS ---------------' + _name.text);

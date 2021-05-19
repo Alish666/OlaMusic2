@@ -57,22 +57,23 @@ class ProductItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(
-                        left: 55, top: 30, right: 30, bottom: 10),
-                    child: OctoImage(
-                      image: NetworkImage(instrument.url),
-                      width: 130,
-                      height: 130,
-                      placeholderBuilder: (context) => Container(
-                        height: 50,
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.grey),
-                          ),
+                  padding:
+                      EdgeInsets.only(left: 55, top: 30, right: 30, bottom: 10),
+                  child: OctoImage(
+                    image: NetworkImage(instrument.url),
+                    width: 130,
+                    height: 130,
+                    placeholderBuilder: (context) => Container(
+                      height: 50,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.grey),
                         ),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 18,
                 ),
@@ -99,7 +100,7 @@ class ProductItem extends StatelessWidget {
                         fontSize: 19,
                         fontWeight: FontWeight.bold),
                   ),
-                )
+                ),
               ],
             ),
           ],

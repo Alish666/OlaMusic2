@@ -1,5 +1,7 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/model/data.dart';
 import 'package:olamusic/model/user.dart';
 import 'package:olamusic/screens/user%20settings/FrontLayer.dart';
@@ -53,14 +55,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  CircleAvatar(
-                    foregroundColor: Colors.white,
-                    minRadius: 35,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      color: Color.fromRGBO(255, 188, 44, 1),
-                      size: 65,
+                  GestureDetector(
+                    onTap: () =>
+                        _showAvatars(context: context, userData: userData),
+                    child: OctoImage(
+                      image: AssetImage('assets/${userData.avatar}.png'),
+                      height: 80,
+                      width: 80,
                     ),
                   ),
                   SizedBox(
@@ -292,6 +293,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           country: userData.countryText,
                           city: userData.cityText,
                           address: userData.addressText);
+                      _showResult(
+                          context: context,
+                          message: "Data has been successfully saved!",
+                          icon: LineIcons.checkCircle,
+                          color: Colors.green);
                     }
                   },
                   child: Text(
@@ -306,6 +312,171 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       frontLayer: FrontLayer(),
+    );
+  }
+
+  Future<void> _showResult(
+      {@required BuildContext context,
+      @required String message,
+      @required IconData icon,
+      @required Color color}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: color,
+                  size: 60,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text(
+                    message,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK', style: TextStyle(color: Colors.yellow[900])),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showAvatars(
+      {@required BuildContext context, @required OlaUser userData}) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: 300,
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 25,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.9),
+              children: [
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/bear.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('bear');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/cat.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('cat');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/dog.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('dog');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/fox.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('fox');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/horse.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('horse');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/owl.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('owl');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/penguin.png'),
+                    width: 50,
+                    height: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('penguin');
+                    Navigator.of(context).pop();
+                  },
+                ),
+                GestureDetector(
+                  child: OctoImage(
+                    image: AssetImage('assets/pig.png'),
+                    height: 50,
+                    width: 50,
+                  ),
+                  onTap: () {
+                    userData.setAvatar('pig');
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK',
+                  style: TextStyle(color: Colors.yellow[900], fontSize: 18)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
