@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:olamusic/model/basket.dart';
 import 'package:olamusic/model/user.dart';
+import 'package:olamusic/screens/PaymentScreen.dart';
 import 'package:olamusic/widgets/CartScreenItem.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -211,7 +213,9 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       floatingActionButton: AnimatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          _await(context: context);
+        },
         child: Text(
           "CHECKOUT",
           style: TextStyle(
@@ -226,6 +230,42 @@ class _CartScreenState extends State<CartScreen> {
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
+    );
+  }
+
+  Future<void> _await({@required BuildContext context}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 2), () {
+          Navigator.of(context).pop(true);
+          pushNewScreen(
+            context,
+            screen: PaymentScreen(),
+            withNavBar: false,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        });
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Please wait...',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
