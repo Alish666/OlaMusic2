@@ -22,7 +22,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     emailController = TextEditingController(
         text: Provider.of<OlaUser>(context, listen: false).email);
     countryController = TextEditingController(
@@ -34,6 +33,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     final basketData = Provider.of<Basket>(context);
     final dataCard = Provider.of<DataCard>(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -223,7 +223,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             onPressed: () {
                               if (_formKey.currentState.validate() &&
                                   _formKey2.currentState.validate()) {
-                                print('vALID');
+                                _await(context: context, basketData: basketData)
+                                    .then(
+                                        (value) => Navigator.of(context).pop())
+                                    .then((value) => _showResult(
+                                        context: context,
+                                        message:
+                                            'Products purchased successfully!',
+                                        icon: LineIcons.checkCircle,
+                                        color: Colors.green));
                               }
                             },
                             child: Text(
@@ -275,6 +283,82 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _await(
+      {@required BuildContext context, @required Basket basketData}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        basketData.clearData();
+        Future.delayed(Duration(seconds: 4), () {
+          Navigator.of(context).pop(true);
+        });
+        return AlertDialog(
+          backgroundColor: Colors.black,
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Please wait...',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showResult(
+      {@required BuildContext context,
+      @required String message,
+      @required IconData icon,
+      @required Color color}) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: color,
+                  size: 60,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text(
+                    message,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK', style: TextStyle(color: Colors.yellow[900])),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

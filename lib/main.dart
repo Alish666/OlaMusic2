@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:olamusic/model/data.dart';
+
 import 'package:olamusic/model/user.dart';
 
 import 'package:olamusic/screens/AuthScreen.dart';

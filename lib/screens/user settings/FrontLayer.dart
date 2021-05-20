@@ -4,7 +4,6 @@ import 'package:line_icons/line_icons.dart';
 import 'package:olamusic/model/card.dart';
 import 'package:olamusic/model/data.dart';
 import 'package:olamusic/model/user.dart';
-import 'package:olamusic/screens/user%20settings/OrdersList.dart';
 import 'package:olamusic/screens/user%20settings/PasswordChange.dart';
 import 'package:olamusic/screens/user%20settings/PaymentCard.dart';
 import 'package:olamusic/screens/user%20settings/Support.dart';
@@ -21,32 +20,6 @@ class FrontLayer extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Column(
         children: <Widget>[
-          GestureDetector(
-            onTap: () => _goToDefinedScreen(context, OrdersList()),
-            child: DecoratedBox(
-              decoration: formStyle(),
-              child: ListTile(
-                leading: Icon(
-                  Icons.table_chart_outlined,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  'Orders',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => _goToDefinedScreen(context, OrdersList()),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
           DecoratedBox(
             decoration: formStyle(),
             child: ListTile(
@@ -123,6 +96,32 @@ class FrontLayer extends StatelessWidget {
                     context,
                     Support(),
                   ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          GestureDetector(
+            onTap: () => _launchURL(),
+            child: DecoratedBox(
+              decoration: formStyle(),
+              child: ListTile(
+                leading: Icon(
+                  Icons.table_chart_outlined,
+                  color: Colors.black,
+                ),
+                title: Text(
+                  'Orders',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    color: Colors.black,
+                  ),
+                  onPressed: () => _launchURL(),
                 ),
               ),
             ),

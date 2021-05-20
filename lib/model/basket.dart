@@ -175,4 +175,23 @@ class Basket with ChangeNotifier {
     });
     return total;
   }
+
+  Future<void> clearData() async {
+    Map<String, BasketItem> temp = _basket;
+    _basket = {};
+    notifyListeners();
+    var userId = FirebaseAuth.instance.currentUser.uid;
+    var fb = FirebaseFirestore.instance
+        .collection('users/')
+        .doc('$userId')
+        .collection('basket/');
+
+    temp.forEach((key, value) async {
+      await fb
+          .doc('$key')
+          .delete()
+          .then((value) => print("deleted successfully!"))
+          .catchError((error) => print(error));
+    });
+  }
 }

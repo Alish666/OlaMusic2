@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:list_tile_more_customizable/list_tile_more_customizable.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:olamusic/model/basket.dart';
@@ -19,7 +20,24 @@ class _CartScreenItemState extends State<CartScreenItem> {
   Widget build(BuildContext context) {
     final basketData = Provider.of<Basket>(context);
     return basketData.basket.isEmpty
-        ? Center(child: Text("No Instruments"))
+        ? Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "No Orders yet",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Icon(
+                  LineIcons.frowningFace,
+                  size: 70,
+                )
+              ],
+            ),
+          )
         : ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
