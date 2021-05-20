@@ -116,7 +116,7 @@ class _CartScreenItemState extends State<CartScreenItem> {
                               basketData.basket[key].instrument.name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
+                                  fontSize: 19, fontWeight: FontWeight.bold),
                             ),
                           ),
                           SizedBox(

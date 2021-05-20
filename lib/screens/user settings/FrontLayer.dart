@@ -11,8 +11,6 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _url = 'http://project4092956.tilda.ws/';
-
 class FrontLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,8 @@ class FrontLayer extends StatelessWidget {
                     Icons.arrow_forward_ios_outlined,
                     color: Colors.black,
                   ),
-                  onPressed: () => _launchURL()),
+                  onPressed: () =>
+                      _launchURL('http://project4092956.tilda.ws/')),
             ),
           ),
           SizedBox(
@@ -104,7 +103,8 @@ class FrontLayer extends StatelessWidget {
             height: 10,
           ),
           GestureDetector(
-            onTap: () => _launchURL(),
+            onTap: () =>
+                _launchURL('http://project4092956.tilda.ws/page19664344.html'),
             child: DecoratedBox(
               decoration: formStyle(),
               child: ListTile(
@@ -121,7 +121,8 @@ class FrontLayer extends StatelessWidget {
                     Icons.arrow_forward_ios_outlined,
                     color: Colors.black,
                   ),
-                  onPressed: () => _launchURL(),
+                  onPressed: () => _launchURL(
+                      'http://project4092956.tilda.ws/page19664344.html'),
                 ),
               ),
             ),
@@ -301,7 +302,6 @@ class FrontLayer extends StatelessWidget {
     );
   }
 
-  void _launchURL() async => await canLaunch(_url)
-      ? await launch(_url)
-      : throw 'Could not launch $_url';
+  void _launchURL(String uri) async =>
+      await canLaunch(uri) ? await launch(uri) : throw 'Could not launch $uri';
 }

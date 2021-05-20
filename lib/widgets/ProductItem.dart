@@ -7,9 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ProductItem extends StatelessWidget {
-  // final Instrument instrument;
-  // ProductItem({this.instrument});
-
   @override
   Widget build(BuildContext context) {
     final instrument = Provider.of<Instrument>(context, listen: true);
@@ -24,86 +21,97 @@ class ProductItem extends StatelessWidget {
             name: '/InstrumentDetailScreen', arguments: instrument),
       ),
       child: Container(
+        padding: EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        child: Stack(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          children: [
-            Positioned(
-              child: IconButton(
-                icon: data.starred.containsKey(instrument.id)
-                    ? Icon(
-                        Icons.favorite,
-                        size: 28,
-                        color: Colors.red[600],
-                      )
-                    : Icon(
-                        Icons.favorite,
-                        size: 28,
-                        color: Colors.grey,
-                      ),
-                onPressed: () {
-                  if (data.starred.containsKey(instrument.id)) {
-                    data.deleteFromStarred(instrument);
-                  } else {
-                    data.addToStarred(instrument);
-                  }
-                },
-              ),
-              right: 10,
-              top: 10,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                spreadRadius: -4,
+                color: Colors.black,
+                offset: Offset(2, 2),
+                blurRadius: 3,
+              )
+            ]),
+        child: GridTile(
+          header: GridTileBar(
+            title: Text('         '),
+            trailing: IconButton(
+              alignment: Alignment.topLeft,
+              icon: data.starred.containsKey(instrument.id)
+                  ? Icon(
+                      Icons.favorite,
+                      size: 28,
+                      color: Colors.red[600],
+                    )
+                  : Icon(
+                      Icons.favorite,
+                      size: 28,
+                      color: Colors.grey,
+                    ),
+              onPressed: () {
+                if (data.starred.containsKey(instrument.id)) {
+                  data.deleteFromStarred(instrument);
+                } else {
+                  data.addToStarred(instrument);
+                }
+              },
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 55, top: 30, right: 30, bottom: 10),
-                  child: OctoImage(
-                    image: NetworkImage(instrument.url),
-                    width: 130,
-                    height: 130,
-                    placeholderBuilder: (context) => Container(
-                      height: 50,
-                      child: const Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.grey),
-                        ),
-                      ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              OctoImage(
+                width: 130,
+                height: 130,
+                placeholderBuilder: (context) => Container(
+                  height: 50,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 18,
+                image: NetworkImage(
+                  instrument.url,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: Text(
-                    "\$" + instrument.price.toString(),
-                    style: TextStyle(
-                        color: Colors.green[800],
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  ),
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 25, right: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\$" + instrument.price.toString(),
+                      style: TextStyle(
+                          color: Colors.green[800],
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      instrument.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: Text(
-                    instrument.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.grey[800],
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -113,13 +121,3 @@ class ProductItem extends StatelessWidget {
     Navigator.pushNamed(context, '/InstrumentDetailScreen', arguments: id);
   }
 }
-
-
-// Navigator.push(
-//         context,
-//         MaterialPageRoute(
-//           builder: (context) => InstrumentDetailScreen(
-//             takenId: instrument.id,
-//           ),
-//         ),
-//       ),

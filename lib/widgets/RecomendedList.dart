@@ -6,7 +6,7 @@ class RecomendedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         // Home Page Screen's istruments recomendations
-        // logic realization
+
         );
   }
 }

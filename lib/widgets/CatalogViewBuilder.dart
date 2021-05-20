@@ -53,9 +53,9 @@ class _CatalogViewBuilderState extends State<CatalogViewBuilder> {
             },
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.8,
                 crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.75),
           );
         } else if (!snapshot.hasData) {
           return Center(
